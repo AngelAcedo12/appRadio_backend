@@ -1,4 +1,9 @@
-async function GET (req,res) {
-    res.send("Hello World!")
+async function GET (request) {
+   
+    return  new Response(JSON.stringify({message: 'Hello World!'}));
 }
-export default { GET }
+async function POST (request) { 
+    console.log(await request.json())
+    return  new Response(JSON.stringify({message: 'Hello World!'}));    
+}   
+export  { GET,POST }
