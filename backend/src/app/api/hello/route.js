@@ -1,5 +1,10 @@
+import { dbConnect } from "../../config/mongodb";
+
+
+
+
+await dbConnect();
 async function GET (request) {
-   
     return  new Response(JSON.stringify({message: 'Hello World!'}));
 }
 async function POST (request) { 
