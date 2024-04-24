@@ -1,12 +1,13 @@
 import mongoose from "mongoose";
-import { TypeRadio } from "./typeRadio";
-import { type } from "os";
+
+
 
 const userSchema = new mongoose.Schema({
     
     name: {
         type: String,
-        required: true
+        required: true, 
+        unique: true
     },
     email: {
         type: String,
@@ -28,3 +29,4 @@ const userSchema = new mongoose.Schema({
         }
     ]
 });
+export default mongoose.models.user ||  mongoose.model('users', userSchema) ;
