@@ -15,11 +15,10 @@ async function GET (request) {
     const email = decodeUrl(paramsEmail[1]) 
     const password = paramsPassword[1]
     
-  
     const queryBody = {
         email:email
     }
-    console.log(queryBody)
+
     const result = await user.findOne(queryBody).then(res => {
         
         if(res.password===password){
