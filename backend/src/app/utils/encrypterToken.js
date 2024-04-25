@@ -13,7 +13,7 @@ const tokenDecrypter = async(token) => {
     try {
         
      const tokenDecode= await jwt.decode(token, process.env.SECRET);
-     console.log(tokenDecode, "tokenDecode")
+     
      return tokenDecode;
     } catch (error) {
         return false;
