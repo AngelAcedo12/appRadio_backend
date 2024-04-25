@@ -2,6 +2,7 @@
 import {dbConnect} from '../../config/mongodb'
 import user from '../../models/dbModels/user'
 import {tokenEncrypter} from "../../utils/encrypterToken";
+import { decodeUrl } from '../../utils/UrlDecode';
 await dbConnect();
 
 
@@ -9,16 +10,33 @@ async function GET (request) {
    
     const url = await request.url;
     const urlParams = new URL(url).searchParams.toString().split('&')
-    const params = urlParams[0].split("=")
-    const name = params[1]
-    console.log(name)
-    const result = await user.find({name:name}).then((user) => {
+    const paramsEmail = urlParams[0].split("=")
+    const paramsPassword = urlParams[1].split("=")
+    const email = decodeUrl(paramsEmail[1]) 
+    const password = paramsPassword[1]
+    
+  
+    const queryBody = {
+        email:email
+    }
+    console.log(queryBody)
+    const result = await user.findOne(queryBody).then(res => {
         
-        return {
-            status: true,
-            message: 'User found',
-            user: user
+        if(res.password===password){
+
+            return {
+                status: true,
+                message: 'User found',
+                user: res
+            }
+        }else{
+            return {
+                status: false,
+                message: 'Password incorrect',
+                user:{}
+            }
         }
+
     }).catch((error) => {
         return {
             status: false,
@@ -26,12 +44,16 @@ async function GET (request) {
             error: error
         }
     })
+
     if(user.status === false){
-        return new Response(JSON.stringify(result));
+        const response = new Response(JSON.stringify(result))
+        response.headers.set('Content-Type', 'application/json');
+        return response;
     }
+
     const token = tokenEncrypter(result.user);
     const response = new Response(JSON.stringify(result));
-    response.headers.set('token', token);
+    response.headers.set('oauth-token-app-radio', token);
     response.headers.set('Content-Type', 'application/json');
     return response;
 }
@@ -58,7 +80,7 @@ async function POST (request) {
     }
     const token = tokenEncrypter(body);
     const response = new Response(JSON.stringify(result));
-    response.headers.set('token', token);   
+    response.headers.set('oauth-token-app-radio', token);   
 
 
     return response;
