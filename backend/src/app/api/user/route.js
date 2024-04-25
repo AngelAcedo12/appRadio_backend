@@ -51,9 +51,9 @@ async function GET (request) {
     }
 
     const token = tokenEncrypter(result.user);
-    const response = new Response(JSON.stringify(result));
-    response.headers.set('oauth-token-app-radio', token);
-    response.headers.set('Content-Type', 'application/json');
+    const response = new Response(JSON.stringify({result, token:token}));
+    
+    
     return response;
 }
 
@@ -78,8 +78,8 @@ async function POST (request) {
         return newRespose;
     }
     const token = tokenEncrypter(body);
-    const response = new Response(JSON.stringify(result));
-    response.headers.set('oauth-token-app-radio', token);   
+    const response = new Response(JSON.stringify({result, token:token}));
+    
 
 
     return response;
