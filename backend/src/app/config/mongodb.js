@@ -8,6 +8,7 @@ if(process.env.NODE_ENV !== 'production'){
      DB_URL = process.env.DB_URL_PRO
 }
 
+
 const dbConnect = async () => {
     try {
         await mongose.connect( DB_URL,{
