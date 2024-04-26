@@ -1,10 +1,16 @@
 import mongose from 'mongoose';
 
-const DB_URL_DEV = process.env.DB_URL || 'mongodb://localhost:27017/pruebasAppRadio';
-const DB_URL_PRO = process.env.DB_URL_PRO
+const DB_URL = ""
+if(process.env.NODE_ENV !== 'production'){
+    DB_URL = process.env.DB_URL || 'mongodb://localhost:27017/pruebasAppRadio';
+    
+}else{
+     DB_URL = process.env.DB_URL_PRO
+}
+
 const dbConnect = async () => {
     try {
-        await mongose.connect( DB_URL_PRO,{
+        await mongose.connect( DB_URL,{
             useNewUrlParser: true,
             useUnifiedTopology: true
         });
