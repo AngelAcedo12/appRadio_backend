@@ -4,7 +4,7 @@ const DB_URL_DEV = process.env.DB_URL || 'mongodb://localhost:27017/pruebasAppRa
 const DB_URL_PRO = process.env.DB_URL_PRO
 const dbConnect = async () => {
     try {
-        await mongose.connect( DB_URL_DEV,{
+        await mongose.connect( DB_URL_PRO,{
             useNewUrlParser: true,
             useUnifiedTopology: true
         });

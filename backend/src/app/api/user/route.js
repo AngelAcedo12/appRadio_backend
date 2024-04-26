@@ -50,8 +50,7 @@ async function GET (request) {
 
     if(result.status === false){
         console.log("USUARIO INCORRECTO")
-        const response = new Response(JSON.stringify(result))
-        response.headers.set('Content-Type', 'application/json');
+        const response = new Response(JSON.stringify(result), {status:403})
         return response;
     }
 
@@ -83,13 +82,13 @@ async function POST (request) {
     if(result.status === false){
         console.log("ERROR AL CREAR USUARIO")
         console.log(result)
-        const newRespose = new Response(JSON.stringify(result));
+        const newRespose = new Response(JSON.stringify(result), {status:403});
         return newRespose;
     }
     console.log("USUARIO CREADO")
     const token = tokenEncrypter(body);
 
-    const response = new Response(JSON.stringify({result, token:token}));
+    const response = new Response(JSON.stringify({result, token:token},200));
     
 
 
