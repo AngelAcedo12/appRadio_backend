@@ -7,19 +7,19 @@ async function POST (request) {
 
     const data = await request.json();
     const token = data.token;
-    console.log(data, "DATA")
-    console.log(token)
-    if (token!==undefined || token!==null || token!=="") {
 
+    if (token!==undefined || token!==null || token!=="") {
         const userLogIn = await tokenDecrypter(token).then((res) => {
-            console.log(res, "userLogIN"); return user;
+     
+            return res.user;
         });
-        const result = await user.findOne({email: user.email}).then((res) => {
+        const findUserInDb=  await user.findOne({email: userLogIn.email}).then((res) => {
+    
             return res;
         })
-        console.log(result)
-        console.log(userLogIn)
-        if(result){
+        
+
+        if(findUserInDb.name===userLogIn.name && findUserInDb.email===userLogIn.email ){
             let response = new Response(JSON.stringify({status:true}));
             return response;
         }
@@ -27,7 +27,7 @@ async function POST (request) {
         return response
     } else {
         let response = new Response(JSON.stringify({status:false}));
-        console.log(response, "response")
+    
         return response
     }
 

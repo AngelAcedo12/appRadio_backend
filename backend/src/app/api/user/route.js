@@ -2,6 +2,7 @@
 import {dbConnect} from '../../config/mongodb'
 import user from '../../models/dbModels/user'
 import {tokenEncrypter} from "../../utils/encrypterToken";
+import { comparePassword, encryptPassword } from '../../utils/passwordEncrypter';
 import { decodeUrl } from '../../utils/UrlDecode';
 await dbConnect();
 
@@ -15,14 +16,17 @@ async function GET (request) {
     const email = decodeUrl(paramsEmail[1]) 
     const password = paramsPassword[1]
     
+
+
+
     const queryBody = {
         email:email
     }
 
-    const result = await user.findOne(queryBody).then(res => {
-        
-        if(res.password===password){
 
+    const result = await user.findOne(queryBody).then(res => {
+      
+        if(comparePassword(decodeUrl(password), res.password)){
             return {
                 status: true,
                 message: 'User found',
@@ -44,7 +48,8 @@ async function GET (request) {
         }
     })
 
-    if(user.status === false){
+    if(result.status === false){
+        console.log("USUARIO INCORRECTO")
         const response = new Response(JSON.stringify(result))
         response.headers.set('Content-Type', 'application/json');
         return response;
@@ -52,21 +57,23 @@ async function GET (request) {
 
     const token = tokenEncrypter(result.user);
     const response = new Response(JSON.stringify({result, token:token}));
-    
-    
     return response;
 }
+
+
 
 async function POST (request) {
 
     const body = await request.json();
+    body.password = await encryptPassword(body.password);
+  
     const result = await user.create(body).then(() =>{
         return {
             status: true,
             message: 'User created' 
         }
     } ).catch((error) => {
-
+        console.log(error, "ERROR AL CREAR USUARIO ", error.message)
         return {
             status: false,
             message: "Failed to create user",
