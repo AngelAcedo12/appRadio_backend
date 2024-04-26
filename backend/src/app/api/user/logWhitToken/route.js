@@ -20,13 +20,13 @@ async function POST (request) {
         
 
         if(findUserInDb.name===userLogIn.name && findUserInDb.email===userLogIn.email ){
-            let response = new Response(JSON.stringify({status:true}));
+            let response = new Response(JSON.stringify({status:true},200));
             return response;
         }
-        let response = new Response(JSON.stringify({status:true}));
+        let response = new Response(JSON.stringify({status:true},200));
         return response
     } else {
-        let response = new Response(JSON.stringify({status:false}));
+        let response = new Response(JSON.stringify({status:false},403));
     
         return response
     }
