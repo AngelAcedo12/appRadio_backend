@@ -1,6 +1,6 @@
 import mongose from 'mongoose';
 
-const DB_URL = process.env.DB_URL_PRO || 'mongodb://localhost:27017/pruebasAppRadio';
+const DB_URL = process.env.DB_URL || 'mongodb://localhost:27017/pruebasAppRadio';
 const dbConnect = async () => {
     try {
         await mongose.connect( DB_URL,{
