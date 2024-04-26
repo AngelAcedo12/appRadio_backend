@@ -87,7 +87,7 @@ async function POST (request) {
     }
     console.log("USUARIO CREADO")
     const token = tokenEncrypter(body);
-    console.log({result, token:token})
+
     const response = new Response(JSON.stringify({result, token:token}));
     
 
