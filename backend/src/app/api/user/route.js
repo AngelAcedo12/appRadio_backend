@@ -82,6 +82,7 @@ async function POST (request) {
     });
     if(result.status === false){
         console.log("ERROR AL CREAR USUARIO")
+        console.log(result)
         const newRespose = new Response(JSON.stringify(result));
         return newRespose;
     }
