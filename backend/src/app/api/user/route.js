@@ -89,8 +89,6 @@ async function POST (request) {
     const token = tokenEncrypter(body);
 
     const response = new Response(JSON.stringify({result, token:token},200));
-    
-
 
     return response;
 

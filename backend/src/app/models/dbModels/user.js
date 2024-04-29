@@ -27,6 +27,23 @@ const userSchema = new mongoose.Schema({
             urlResolved: String,
             homepage: String,
             favicon: String,
+            tags: [String],
+            country: String,
+            countryCode: String,
+            state: String,
+            language: [String],
+            votes: Number,
+            lastChangeTime: Date,
+            codec: String,
+            bitrate: Number,
+            hls: Boolean,
+            lastCheckOk: Boolean,
+            lastCheckTime: Date,
+            lastCheckOkTime: Date,
+            lastLocalCheckTime: Date,
+            clickTimestamp: Date,
+            clickCount: Number,
+            clickTrend: Number,  
         }
     ]
 });
