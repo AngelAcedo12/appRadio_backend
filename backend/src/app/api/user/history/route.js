@@ -49,7 +49,7 @@ export async function POST(request) {
             return new Response(JSON.stringify({message: 'Ya es el ultimo en el historial'}), {status: 403});
         }
         oldHistory.push(body.history.data)
-      
+        
         const queryBody = {
             email: user.email
         }

@@ -25,6 +25,8 @@ export async function POST(request) {
     if(userFound.historial === null || userFound.historial === undefined){
         return new Response(JSON.stringify({message: 'History not found'}), {status: 403});
     }
+
+    let historial = userFound.historial.reverse()
     return new Response(JSON.stringify({data: userFound.historial}), {status: 200});
 
 
