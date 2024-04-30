@@ -37,10 +37,16 @@ export async function POST(request) {
         )
  
         oldHistory = userFound.historial
-        //oldHistory = userFound.historial;
+        
         if(oldHistory === null || oldHistory === undefined){
             oldHistory = []
             return new Response(JSON.stringify({message: 'Error to add'}), {status: 403});
+        }
+        let lastPosition = oldHistory.length
+       
+        if(oldHistory[oldHistory.length-1].id === body.history.data.id){
+            console.log("No add to history")
+            return new Response(JSON.stringify({message: 'Ya es el ultimo en el historial'}), {status: 403});
         }
         oldHistory.push(body.history.data)
       
