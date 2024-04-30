@@ -53,8 +53,14 @@ async function GET (request) {
         const response = new Response(JSON.stringify(result), {status:403})
         return response;
     }
-
-    const token = tokenEncrypter(result.user);
+    const tokenUser = {
+        namme: result.user.name,
+        email: result.user.email,
+        password: result.user.password
+    
+    };
+    
+    const token = tokenEncrypter(tokenUser);
     const response = new Response(JSON.stringify({result, token:token}));
     return response;
 }
@@ -65,7 +71,7 @@ async function POST (request) {
 
     const body = await request.json();
     body.password = await encryptPassword(body.password);
-  
+    
     const result = await user.create(body).then(() =>{
         return {
             status: true,
