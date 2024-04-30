@@ -43,11 +43,13 @@ export async function POST(request) {
             return new Response(JSON.stringify({message: 'Error to add'}), {status: 403});
         }
         let lastPosition = oldHistory.length
-       
-        if(oldHistory[oldHistory.length-1].id === body.history.data.id){
-            console.log("No add to history")
-            return new Response(JSON.stringify({message: 'Ya es el ultimo en el historial'}), {status: 403});
+        if(oldHistory.length > 0){
+            if(oldHistory[oldHistory.length-1].id === body.history.data.id ){
+                console.log("No add to history")
+                return new Response(JSON.stringify({message: 'Ya es el ultimo en el historial'}), {status: 200});
+            }
         }
+       
         oldHistory.push(body.history.data)
         
         const queryBody = {
