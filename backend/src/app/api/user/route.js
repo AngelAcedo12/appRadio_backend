@@ -57,7 +57,6 @@ async function GET (request) {
         namme: result.user.name,
         email: result.user.email,
         password: result.user.password
-    
     };
     
     const token = tokenEncrypter(tokenUser);
