@@ -60,6 +60,7 @@ async function GET (request) {
     };
     
     const token = tokenEncrypter(tokenUser);
+    console.log(result, "USUARIO ENCONTRADO")
     const response = new Response(JSON.stringify({result, token:token}));
     return response;
 }
