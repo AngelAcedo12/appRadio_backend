@@ -29,6 +29,7 @@ async function POST (request) {
             email: findUserInDb.email,
             imgProfile: findUserInDb.imgProfile
         }},200));
+        
         return response
     } else {
         let response = new Response(JSON.stringify({status:false},403));
