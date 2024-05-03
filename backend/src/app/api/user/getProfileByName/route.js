@@ -18,7 +18,6 @@ export async function POST(request){
             profile: res
         }
 
-   
     }   
     ).catch((err) => {
         return {
