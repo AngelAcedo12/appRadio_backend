@@ -5,10 +5,13 @@ await dbConnect();
 
 export async function POST(request){
     const {body} =await request.json()
-
+  
     const {name} = body
-   console.log(name)
-    const result = await userShema.findOne({name: name}).then((res) => {  
+   
+    const queryBody = {
+        name: name
+    }
+    const result = await userShema.findOne(queryBody).then((res) => {  
 
         return {
             status: true,
@@ -26,10 +29,10 @@ export async function POST(request){
     })
     // console.log(result)
     if(result.status === false){
-        console.log({status: false, error: result.error})
+        
         return new Response(JSON.stringify({status: false, error: result.error}, {status: 403}))
     }
-    console.log({status: true, profile: result.profile})
+  
     const profile = {
         name: result.profile.name,
         email: result.profile.email,

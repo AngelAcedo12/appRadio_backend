@@ -11,7 +11,7 @@ export async function POST(request){
 
     if (token!==undefined || token!==null || token!=="") {
         const userByToken = await tokenDecrypter(token).then((res) => {
-            console.log(res)
+      
             return res.user;
         });
 
