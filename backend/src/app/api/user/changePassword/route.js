@@ -34,7 +34,7 @@ export async function PUT(request) {
     const update = {
         password: encryptedPassword
     }
-   console.log(filter)
+
     const userUpdate = await userSchema.findOneAndUpdate(filter,update,{new:true})
     .then((res) => {
         console.log(res,"userUpdate")
