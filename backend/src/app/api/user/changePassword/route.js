@@ -28,7 +28,7 @@ export async function PUT(request) {
     )
 
     const filter = {
-        name: userLogIn.namme
+        email: userLogIn.email
     }
  
     const update = {
