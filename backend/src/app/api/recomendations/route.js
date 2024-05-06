@@ -4,15 +4,15 @@ import userSchema from "../../models/dbModels/user";
 
 await dbConnect();
 export async function POST(request){
-    console.log("RECOMENDATIONS")
-    const {token} = await request.json();
-
+  
+    
+    const {token,actualUser} = await request.json();
+    console.log(actualUser)
     const userToken = await tokenDecrypter(token).then((res) => {
         return res.user;
     });
 
     const recomendations =  await userSchema.aggregate([ { $sample: { size: 10 } } ]).then((res) => {	
-
         return res
        
     }
@@ -24,7 +24,7 @@ export async function POST(request){
     }
     )
     const response = recomendations.filter((item) => {
-        if(item.email !== userToken.email){
+        if(item.email !== userToken.email || item.email !== actualUser) {
             return item
         }
         
