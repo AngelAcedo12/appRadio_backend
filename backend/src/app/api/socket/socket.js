@@ -1,6 +1,6 @@
 const io = require('socket.io')
 
-export default async function handler(req,res)  {
+export default async function GET(req,res)  {
 
     if(res.socket.server) {
         res.end('Not found')
