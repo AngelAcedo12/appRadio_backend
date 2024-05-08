@@ -25,7 +25,7 @@ app.prepare().then(() => {
 
   io.on("connection", (socket) => {
         
-        socket.emit("connection","Connected")
+        
 
 
         socket.on("message",(data) => {
@@ -33,12 +33,18 @@ app.prepare().then(() => {
             io.emit("message",data)
         })
 
-        socket.on("audio",(stream) => {
+        socket.on("audio",async (stream) => {
+            try{
+                
+               
+                const audioBlob = new Blob([stream], { type: 'audio/wav' });
+               
+                io.emit("audio",await audioBlob.arrayBuffer().then(buffer => buffer));
 
-            console.log(stream,"audio")
-            console.log("Escuchandooo")
-            io.emit("audio",stream)
-        })
+            }catch(error){
+                console.log(error)
+            }
+        });
 
     });
    
