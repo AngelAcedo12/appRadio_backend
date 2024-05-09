@@ -1,6 +1,8 @@
+const { stat } = require("fs");
 const { createServer } = require("http");
 const next = require("next");
 const { Server } = require("socket.io");
+
 const dev = process.env.NODE_ENV !== "production";
 const hostname = dev=="production" ?  "app-radio-backend-git-main-angelacedo12s-projects.vercel.app" : "localhost";
 const port = 3000;
@@ -14,6 +16,7 @@ app.prepare().then(() => {
 
   const httpServer = createServer(handler);
   
+  
   const io = new Server(httpServer, {
     cors: {
       origin: "*",
@@ -23,20 +26,33 @@ app.prepare().then(() => {
     },
   });
 
-  io.on("connection", (socket) => {
+  io.on("connection", async (socket) => {
         
         
+       const idHandShake = socket.id;
+       const {nameTransmision,  type} = socket.handshake.query;
+      console.log(nameTransmision, type)
+      if(type==='locutor'){
 
+         socket.join(nameTransmision)
+        
 
-        socket.on("message",(data) => {
-            console.log(data)
-            io.emit("message",data)
-        })
+      }
+      if(type==='listener'){
 
+        socket.join(nameTransmision)
+        
+        socket.emit("join to transmision",
+        {
+            message: `Hola dispositivo: ${idHandShake} se unio a la transmision de ${nameTransmision}`,
+            id: idHandShake    
+        })  
+     
+      }
+     
         socket.on("audio",async (stream) => {
             try{
-                
-               
+                 console.log("Audio recibido")
                 const audioBlob = new Blob([stream], { type: 'audio/wav' });
                
                 io.emit("audio",await audioBlob.arrayBuffer().then(buffer => buffer));
@@ -46,9 +62,18 @@ app.prepare().then(() => {
             }
         });
 
-    });
-   
 
+        socket.on("disconnect", (socket) => {
+       
+            console.log("Se desconecto", socket)
+          
+        });
+        
+    
+    }
+  );
+  
+    
  
  io.
   httpServer
