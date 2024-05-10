@@ -18,12 +18,13 @@ export async function POST(req,res) {
     }
     
     const userFind = await userSchema.findOne({email: userByToken.user.email}).then((data) => data).catch((error) => error)
+    
     if(userFind === null || userFind === undefined){
             
             return new Response({status:false, message: "User not found"}, {status: 404})
     }
     
-    if(await verifyOneTransmision(userFind.name)){
+    if(await verifyOneTransmision(userFind.email)){
         
         return new Response(JSON.stringify({status:false, message: "Ya tienes una transmision activa"}), {status: 403})
     }
@@ -41,8 +42,6 @@ export async function POST(req,res) {
     if(result === null || result === undefined){
         return new Response(JSON.stringify({status:false, message: "Error al crear la transmision"}), {status: 200})   
     }
-
-    
 
     return new Response(JSON.stringify({status:true, message: "Success"}), {status: 200})
 

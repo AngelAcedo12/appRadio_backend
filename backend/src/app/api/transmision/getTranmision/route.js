@@ -2,7 +2,7 @@ import { dbConnect } from "../../../config/mongodb";
 import transmisionSchema from '../../../models/dbModels/transmision'
 
 await dbConnect();
-export async function GET(){
+export async function GET(req,res){
     
     const transmisions = await transmisionSchema.find().then((res) => {
 
@@ -17,6 +17,6 @@ export async function GET(){
     
  
 
-    return new Response(JSON.stringify({data:transmisions}), {status: 200})
+    return new Response(JSON.stringify({data:transmisions, message:"success"}), {status: 200})
 
 }
