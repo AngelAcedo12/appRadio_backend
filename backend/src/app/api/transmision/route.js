@@ -1,6 +1,6 @@
 import { dbConnect } from "../../config/mongodb";
 import transmisionSchema from '../../models/dbModels/transmision'
-
+import { tokenDecrypter } from "@/app/utils/encrypterToken";
 await dbConnect();
 export async function GET(req,res){
     
