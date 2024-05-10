@@ -1,5 +1,5 @@
-import { dbConnect } from "../../../config/mongodb";
-import transmisionSchema from '../../../models/dbModels/transmision'
+import { dbConnect } from "../../config/mongodb";
+import transmisionSchema from '../../models/dbModels/transmision'
 
 await dbConnect();
 export async function GET(req,res){
