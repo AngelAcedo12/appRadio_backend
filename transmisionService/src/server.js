@@ -51,9 +51,9 @@ io.on("connection", async (socket) => {
         socket.on("audio",async (stream) => {
             try{
                  console.log("Audio recibido")
-                const audioBlob = new Blob([stream], { type: 'audio/wav' });
-               
-                io.emit("audio",await audioBlob.arrayBuffer().then(buffer => buffer));
+              
+                  console.log(stream)
+                io.emit("audio",stream);
 
             }catch(error){
                 console.log(error)
