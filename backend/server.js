@@ -4,7 +4,7 @@ const next = require("next");
 const { Server } = require("socket.io");
 
 const dev = process.env.NODE_ENV !== "production";
-const hostname = dev=="production" ?  "appradio-backend.onrender.com" : "localhost";
+const hostname = "localhost";
 const port = 3000;
 // when using middleware `hostname` and `port` must be provided below
 
