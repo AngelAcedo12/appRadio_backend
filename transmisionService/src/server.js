@@ -50,10 +50,8 @@ io.on("connection", async (socket) => {
      
         socket.on("audio",async (stream) => {
             try{
-                 console.log("Audio recibido")
-              
-                  console.log(stream)
-                io.emit("audio",stream);
+                console.log(stream )
+                socket.broadcast.emit("audio",stream);
 
             }catch(error){
                 console.log(error)
